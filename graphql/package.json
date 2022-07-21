@@ -1,0 +1,21 @@
+{
+  "name": "graphql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "server": "nodemon --watch server.js --watch repo.js ./server.js",
+    "client": "nodemon ./client.js",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "devDependencies": {
+    "@apollo/client": "^3.6.9",
+    "apollo-server": "^3.10.0",
+    "concurrently": "^7.3.0",
+    "dataloader": "^2.1.0",
+    "graphql": "^16.5.0",
+    "node-fetch": "^3.2.9",
+    "nodemon": "^2.0.19"
+  }
+}
