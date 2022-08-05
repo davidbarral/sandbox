@@ -182,13 +182,14 @@ const authorO = async (root, { id }, ctx) => {
   return await repo.findAuthorById(id);
 };
 
-const authorLoader = new DataLoader(async (ids) => {
-  const authors = repo.findAuthorsByIds(ids);
-  return authors.reduce((acc, a) => {
-    acc[a.id] = a;
-    return acc;
-  }, {});
-});
+const authorLoader = () =>
+  new DataLoader(async (ids) => {
+    const authors = repo.findAuthorsByIds(ids);
+    return authors.reduce((acc, a) => {
+      acc[a.id] = a;
+      return acc;
+    }, {});
+  });
 
 const optimized = {
   Query: {
@@ -213,7 +214,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: () => {
-    return { authorLoader };
+    return { authorLoader: authorLoader() };
   },
 });
 
