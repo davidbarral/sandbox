@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate" translate="no">
+<head>
+  <title>Sandbox</title>
+  <meta charset="UTF-8" />
+  <meta name="google" content="notranslate" />
+
+<style>
+body {
+  font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
+  font-size: 24px;
+  line-heigth: 24px
+}
+
+fieldset {
+  border: 0;
+}
+
+.option {
+  border: 1px solid #999;
+  border-radius: 8px;
+}
+
+.option {
+  padding: 20px;
+  margin-top: 20px;
+}
+
+input,
+label {
+  cursor: pointer
+}
+
+.option--selected,
+.with-has .option:has(input:checked) {
+  border-color: rgb(112, 151, 170);
+  background-color: rgb(164, 219, 246);
+}
+
+.option--selected label,
+.with-has .option:has(input:checked) label {
+  color: rgb(20, 95, 131)
+}
+</style>
+</head>
+<body class="without-has">
+  <fieldset>
+      <legend>Elige un restaurante<legend>
+
+      <div class="option">
+        <input type="radio" id="alberto" name="restaurant" value="alberto">
+        <label for="alberto">El del alberto</label>
+      </div>
+
+      <div class="option">
+        <input type="radio" id="charrua" name="restaurant" value="alberto">
+        <label for="charrua">Charrua</label>
+      </div>
+
+      <div class="option">
+        <input type="radio" id="arbore" name="restaurant" value="arbore">
+        <label for="arbore">Árbore da Veira</label>
+      </div>
+  </fieldset>
+  <script>
+    if (document.body.classList.contains("without-has")) {
+      document.addEventListener("change", (event) => {
+        document.querySelector(".option--selected")?.classList?.remove("option--selected");
+        event.target.parentElement.classList.add("option--selected");
+      })
+    }
+  </script>
+</body>
+</html>
