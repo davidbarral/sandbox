@@ -25,22 +25,22 @@ const notifyProjectDocument = ({ bucket, key }) => {
 };
 
 const notifyUpload = (upload) => {
-  if (isPersonSalary(upload)) {
-    nofityPersonSalary(upload);
-    return;
-  }
+  switch (true) {
+    case isPersonSalary(upload):
+      nofityPersonSalary(upload);
+      break;
 
-  if (isPersonDocument(upload)) {
-    notifyPersonDocument(upload);
-    return;
-  }
+    case isPersonDocument(upload):
+      notifyPersonDocument(upload);
+      break;
 
-  if (isProjectDocument(upload)) {
-    notifyProjectDocument(upload);
-    return;
-  }
+    case isProjectDocument(upload):
+      notifyProjectDocument(upload);
+      break;
 
-  throw new Error(`Cannot process ${upload.bucket}/${upload.key}`);
+    default:
+      throw new Error(`Cannot process ${upload.bucket}/${upload.key}`);
+  }
 };
 
 module.exports = { notifyUpload };
