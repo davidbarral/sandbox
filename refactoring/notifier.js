@@ -1,41 +1,45 @@
 const { postMessage } = require("./trello.js");
 
-const isPersonSalary = ({ bucket, key }) => bucket === "people" && /^\/nominas\//.test(key);
-
-const isPersonDocument = ({ bucket, key }) => bucket === "people" && /^\/documents\//.test(key);
-
-const isProjectDocument = ({ bucket }) => bucket === "projects";
-
-const nofityPersonSalary = ({ bucket, key }) => {
-  const [_, login, year, month] = key.match(/^\/nominas\/(\S+?)\/(\d{4})\/(\w+)\.pdf$/);
-  postMessage({
-    channels: ["david.barral"],
-    message: `Nueva nómina de ${month} ${year}`,
-  });
+const personSalary = {
+  check: ({ bucket, key }) => bucket === "people" && /^\/nominas\//.test(key),
+  notify: ({ bucket, key }) => {
+    const [_, login, year, month] = key.match(/^\/nominas\/(\S+?)\/(\d{4})\/(\w+)\.pdf$/);
+    postMessage({
+      channels: ["david.barral"],
+      message: `Nueva nómina de ${month} ${year}`,
+    });
+  },
 };
 
-const notifyPersonDocument = ({ bucket, key }) => {
-  const [_, login, doc] = key.match(/^\/documents\/(\S+?)\/(\S+)$/);
-  postMessage({ channels: [login], message: `Nuevo documento ${doc}` });
+const personDocument = {
+  check: ({ bucket, key }) => bucket === "people" && /^\/documents\//.test(key),
+
+  notify: ({ bucket, key }) => {
+    const [_, login, doc] = key.match(/^\/documents\/(\S+?)\/(\S+)$/);
+    postMessage({ channels: [login], message: `Nuevo documento ${doc}` });
+  },
 };
 
-const notifyProjectDocument = ({ bucket, key }) => {
-  const [_, project, doc] = key.match(/^\/(\S+?)\/(\S+)$/);
-  postMessage({ channels: [project], message: `Nuevo documento: ${doc}` });
+const projectDocument = {
+  check: ({ bucket }) => bucket === "projects",
+  notify: ({ bucket, key }) => {
+    const [_, project, doc] = key.match(/^\/(\S+?)\/(\S+)$/);
+    postMessage({ channels: [project], message: `Nuevo documento: ${doc}` });
+  },
 };
 
 const notifyUpload = (upload) => {
   switch (true) {
-    case isPersonSalary(upload):
-      nofityPersonSalary(upload);
+    case personSalary.check(upload):
+      personSalary.notify(upload);
       break;
 
-    case isPersonDocument(upload):
-      notifyPersonDocument(upload);
+    case personDocument.check(upload):
+      personDocument.notify(upload);
       break;
 
-    case isProjectDocument(upload):
-      notifyProjectDocument(upload);
+    case projectDocument.check(upload):
+      projectDocument.notify(upload);
       break;
 
     default:
