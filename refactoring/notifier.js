@@ -28,16 +28,17 @@ const projectDocument = {
   },
 };
 
-const notifiers = [personSalary, personDocument, projectDocument];
+const guard = {
+  check: () => true,
+  notify: ({ bucket, key }) => {
+    throw new Error(`Cannot process ${upload.bucket}/${upload.key}`);
+  },
+};
+
+const notifiers = [personSalary, personDocument, projectDocument, guard];
 
 const notifyUpload = (upload) => {
-  const notifier = notifiers.find(({ check }) => check(upload));
-
-  if (!notifier) {
-    throw new Error(`Cannot process ${upload.bucket}/${upload.key}`);
-  }
-
-  notifier.notify(upload);
+  notifiers.find(({ check }) => check(upload)).notify(upload);
 };
 
 module.exports = { notifyUpload };
