@@ -52,4 +52,10 @@ describe("notifier", () => {
 ]
 `);
   });
+
+  it("handle errors", () => {
+    expect(() => notifyUpload({ bucket: "people", key: "nope" })).toThrowError();
+    expect(() => notifyUpload({ bucket: "projects", key: "nope" })).toThrowError();
+    expect(() => notifyUpload({ bucket: "nope", key: "nope" })).toThrowError();
+  });
 });
