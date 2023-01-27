@@ -1,0 +1,17 @@
+{
+  "name": "prometheus",
+  "version": "1.0.0",
+  "description": "prometheus example",
+  "exports": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "devDependencies": {
+    "@koa/router": "^12.0.0",
+    "koa": "^2.14.1",
+    "nodemon": "^2.0.20",
+    "prom-client": "^14.1.1",
+    "rome": "^11.0.0"
+  }
+}
