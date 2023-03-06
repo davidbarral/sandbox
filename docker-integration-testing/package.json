@@ -1,0 +1,17 @@
+{
+  "name": "docker-integration-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "docker-compose": "^0.23.19",
+    "node-fetch": "^3.3.0",
+    "prom-client": "^14.2.0",
+    "vitest": "^0.29.2"
+  }
+}

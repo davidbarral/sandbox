@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - ${PROMETHEUS_SERVER_PORT}:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+
+  prometheus-pushgateway:
+    image: prom/pushgateway:latest
+    ports:
+      - ${PROMETHEUS_GATEWAY_PORT}:9091
