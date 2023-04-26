@@ -1,11 +1,11 @@
 type Callback<T extends any[]> = (...args: T) => void;
 
-interface EventTypes {
+type DefaultEventTypes = {
   ev1: [number, number];
   ev2: [string];
-}
+};
 
-const eventBus = () => {
+const eventBus = <EventTypes extends Record<string, any[]> = DefaultEventTypes>() => {
   const handlers: { [K in keyof EventTypes]?: Callback<EventTypes[K]>[] } = {};
 
   const on = <K extends keyof EventTypes>(event: K, cb: Callback<EventTypes[K]>) => {
@@ -27,6 +27,7 @@ const eventBus = () => {
 };
 
 const bus = eventBus();
+// const bus = eventBus<DefaultEventTypes>();
 
 bus.on("ev1", (a, b) => {
   console.log("custom", a, b);
@@ -40,9 +41,18 @@ bus.on("ev2", (a) => {
 
 bus.emit("ev2", "hola");
 
-interface EventTypes {
-  custom: [boolean];
-}
+type CustomEventTypes1 = {
+  custom1: [boolean];
+};
 
-bus.on("custom", (b) => console.log(b));
-bus.emit("custom", true);
+type CustomEventTypes2 = {
+  custom2: [];
+};
+
+const bus2 = eventBus<DefaultEventTypes & CustomEventTypes1 & CustomEventTypes2>();
+
+bus2.on("custom1", (b) => console.log(b));
+bus2.emit("custom1", true);
+
+bus2.on("custom2", () => console.log());
+bus2.emit("custom2");
