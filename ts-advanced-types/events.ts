@@ -1,8 +1,8 @@
 type Callback<T extends any[]> = (...args: T) => void;
 
 type DefaultEventTypes = {
-  ev1: [number, number];
-  ev2: [string];
+  ev1: [a: number, b: number];
+  ev2: [s: string];
 };
 
 const eventBus = <EventTypes extends Record<string, any[]> = DefaultEventTypes>() => {
@@ -42,7 +42,7 @@ bus.on("ev2", (a) => {
 bus.emit("ev2", "hola");
 
 type CustomEventTypes1 = {
-  custom1: [boolean];
+  custom1: [b: boolean];
 };
 
 type CustomEventTypes2 = {
