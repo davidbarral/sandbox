@@ -1,16 +1,21 @@
-type Callback = (...args: any[]) => void;
+type Callback<T extends any[]> = (...args: T) => void;
+
+interface EventTypes {
+  ev1: [number, number];
+  ev2: [string];
+}
 
 const eventBus = () => {
-  const handlers: Record<string, Callback[]> = {};
+  const handlers: { [K in keyof EventTypes]?: Callback<EventTypes[K]>[] } = {};
 
-  const on = (event: string, cb: Callback) => {
+  const on = <K extends keyof EventTypes>(event: K, cb: Callback<EventTypes[K]>) => {
     const cbs = handlers[event] ?? [];
     cbs.push(cb);
     handlers[event] = cbs;
   };
 
-  const emit = (event: string, ...args: any[]) => {
-    handlers[event]?.forEach((cb: Callback) => {
+  const emit = <K extends keyof EventTypes>(event: K, ...args: EventTypes[K]) => {
+    handlers[event]?.forEach((cb) => {
       cb(...args);
     });
   };
@@ -23,8 +28,21 @@ const eventBus = () => {
 
 const bus = eventBus();
 
-bus.on("custom", (a, b) => {
+bus.on("ev1", (a, b) => {
   console.log("custom", a, b);
 });
 
-bus.emit("custom", 1, 2);
+bus.emit("ev1", 1, 2);
+
+bus.on("ev2", (a) => {
+  console.log(a);
+});
+
+bus.emit("ev2", "hola");
+
+interface EventTypes {
+  custom: [boolean];
+}
+
+bus.on("custom", (b) => console.log(b));
+bus.emit("custom", true);
