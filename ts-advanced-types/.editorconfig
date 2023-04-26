@@ -1,0 +1,16 @@
+root = true
+
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+[*.{js,jsx,json,yml}]
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+[nvim-custom]
+formatter = rome
+formatter_path = ./node_modules/.bin/rome
+linter = rome
+linter_path = ./node_modules/.bin/rome
