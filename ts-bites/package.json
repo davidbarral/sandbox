@@ -1,0 +1,10 @@
+{
+  "name": "ts-advanced-types",
+  "version": "1.0.0",
+  "scripts": {
+    "lint": "rome ci ."
+  },
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}
