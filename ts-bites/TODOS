@@ -1,6 +1,8 @@
 - Constrain generics with extends
 - Infer and smart return types
 
+- Default values in generics
+
 - Type Maps
 - Accessing types ......
 

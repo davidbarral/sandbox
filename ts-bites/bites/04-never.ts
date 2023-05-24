@@ -1,6 +1,7 @@
 type Circle = { radius: number; side?: never };
 type Square = {  radius?: never; side: number };
 type Triangle = { base: number, height: number };
+
 type Shape = Circle | Square | Triangle;
 
 const c:Circle = {
