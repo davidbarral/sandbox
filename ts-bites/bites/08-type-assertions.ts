@@ -2,8 +2,10 @@ function assertIsString(value: unknown): asserts value is string {
   if (typeof value !== "string") throw new Error("Not a string");
 }
 
-const aValue: string | null | undefined = "Hello";
+let aValue: string | null | undefined;
 assertIsString(aValue);
+
+let bValue: string = aValue;
 
 // ------------------------
 
