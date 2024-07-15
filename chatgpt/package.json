@@ -1,0 +1,22 @@
+{
+  "name": "chatgpt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "openai": "^4.52.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "nodemonConfig": {
+    "verbose": true,
+    "execMap": {
+      "js": "node --no-warnings --env-file=./.env"
+    }
+  }
+}
